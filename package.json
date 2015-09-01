@@ -1,0 +1,44 @@
+{
+	"name": "react-ui-modal",
+	"version": "0.1.1",
+	"description": "Modal react component by VIPSHOP H5 Team",
+	"main": "lib/modal.js",
+	"dependencies": {
+		"react": "^0.13.3",
+		"classnames": "^2.1.0"
+	},
+	"devDependencies": {
+		"babel-loader": "latest",
+		"babel-runtime": "latest",
+		"style-loader": "latest",
+		"css-loader": "latest",
+		"stylus-loader": "latest",
+		"nib": "latest"
+	},
+	"scripts": {
+		"demo": "webpack-dev-server --hot",
+		"compile": "babel -d lib/ src/",
+		"prepublish": "npm run compile",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"react-component",
+		"modal"
+	],
+	"author": {
+		"name": "VIPSHOP june.chiu"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/JuneChiu/react-ui-modal.git"
+	},
+	"bugs": {
+		"url": "https://github.com/JuneChiu/react-ui-modal/issues"
+	},
+	"homepage": "https://github.com/JuneChiu/react-ui-modal",
+	"maintainers": [{
+		"name": "june.chiu",
+		"email": "june.chiu.s@gmail.com"
+	}]
+}

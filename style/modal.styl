@@ -1,0 +1,96 @@
+
+fn-rem(value) {
+	unit(value / 200, rem)
+}
+
+:local(.frozen)
+	overflow hidden
+	
+:local(.container)
+	position fixed
+	top 50%
+	left 50%
+	transition opacity 200ms ease-in-out, visibility 200ms ease-in-out
+	visibility hidden
+	opacity 0
+	overflow hidden
+	
+	&.active
+		opacity 1
+		visibility visible
+
+:local(.mask)
+	position fixed
+	top 0
+	left 0
+	right 0
+	bottom 0
+	transition opacity 200ms ease-in-out, visibility 200ms ease-in-out
+	visibility hidden
+	opacity 0
+	background rgba(0,0,0,0.5)
+	
+	&.active
+		opacity 1
+		visibility visible
+		
+:local(.tips)
+	background-color #323232
+	color #FFFFFF
+	border-radius 2px
+	white-space nowrap
+	box-shadow 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)
+	padding fn-rem(10) fn-rem(30)
+	text-align center
+	
+:local(.dialog)
+	background-color white
+	color #333
+	border-radius 2px
+	box-shadow: 0 14px 45px rgba(0, 0, 0, 0.25), 0 10px 18px rgba(0, 0, 0, 0.22);
+	width 70%
+
+	header
+		padding 0 fn-rem(20)
+		border-bottom 1px solid #ddd
+		line-height fn-rem(60)
+		font-weight bold
+		background #EEEEEE
+
+	section
+		padding fn-rem(30) fn-rem(20)
+		line-height fn-rem(40)
+		border-bottom 1px solid #ddd
+		white-space pre-line
+
+	footer
+		line-height fn-rem(60)
+		
+	button
+		padding 0
+		margin 0
+		width 50%
+		appearance none
+		border none
+		background white
+		outline none
+		display inline-block
+		vertical-align top
+		position relative
+		line-height fn-rem(60)
+		font-size fn-rem(26)
+		
+		&:after
+			content " "
+			border-right 1px solid #ddd
+			display block
+			height 100%
+			position absolute
+			right 0
+			top 0
+			
+		&:last-child:after
+			content none
+
+		&:active
+			background #F5F5F5
