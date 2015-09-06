@@ -3,28 +3,32 @@ fn-rem(value) {
 	unit(value / 200, rem)
 }
 
+:local(.wrap)
+	position fixed
+	top 0
+	left 0
+	bottom 0
+	right 0
+	
 :local(.frozen)
 	overflow hidden
 	
 :local(.container)
-	position fixed
-	top 50%
-	left 50%
+	position relative
 	transition opacity 200ms ease-in-out, visibility 200ms ease-in-out
 	visibility hidden
 	opacity 0
 	overflow hidden
+	-webkit-perspective 1000
 	
 	&.active
 		opacity 1
 		visibility visible
 
 :local(.mask)
-	position fixed
-	top 0
-	left 0
-	right 0
-	bottom 0
+	position absolute
+	width 100%
+	height 100%
 	transition opacity 200ms ease-in-out, visibility 200ms ease-in-out
 	visibility hidden
 	opacity 0
@@ -39,6 +43,7 @@ fn-rem(value) {
 	color #FFFFFF
 	border-radius 2px
 	white-space nowrap
+	display inline-block
 	box-shadow 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)
 	padding fn-rem(10) fn-rem(30)
 	text-align center
@@ -47,7 +52,7 @@ fn-rem(value) {
 	background-color white
 	color #333
 	border-radius 2px
-	box-shadow: 0 14px 45px rgba(0, 0, 0, 0.25), 0 10px 18px rgba(0, 0, 0, 0.22);
+	box-shadow 0 14px 45px rgba(0, 0, 0, 0.25), 0 10px 18px rgba(0, 0, 0, 0.22)
 	width 70%
 
 	header

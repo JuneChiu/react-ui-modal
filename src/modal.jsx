@@ -33,9 +33,12 @@ class Modal extends React.Component{
 
 		let bounds = containerEl.getBoundingClientRect();
 
-		inlineStyle.marginLeft = - bounds.width / 2
+		// 避免进行3d变换时候产生字体模糊问题 
+		let left = parseInt((window.innerWidth - bounds.width) / 2)
 
-		inlineStyle.marginTop = - bounds.height / 2
+		let top =  parseInt((window.innerHeight - bounds.height) / 2)
+
+		inlineStyle.transform = `translate3d(${left}px, ${top}px, 0)`;
 
 		this.setState({
 			ready: true
@@ -94,7 +97,7 @@ class Modal extends React.Component{
 	render() {
 
 		return (
-			<div ref="wrap">
+			<div className={style.wrap} ref="wrap">
 				<div className={classNames(style.mask, {active: this.state.ready && !this.state.destroy})}></div>
 				<div style={inlineStyle} className={classNames(style.container, this.props.className, {active: this.state.ready && !this.state.destroy})} ref="container">
 					{this.props.children}
