@@ -4,7 +4,7 @@ import style from '../style/modal.styl';
 
 let inlineStyle = {}
 
-class Modal extends React.Component{
+export class Modal extends React.Component{
 
 	constructor(props) {
 
