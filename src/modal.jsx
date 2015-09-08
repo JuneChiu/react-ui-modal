@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import prefixr from 'react-prefixr';
 import style from '../style/modal.styl';
 
 let inlineStyle = {}
@@ -38,7 +39,7 @@ export class Modal extends React.Component{
 
 		let top =  parseInt((window.innerHeight - bounds.height) / 2)
 
-		inlineStyle.transform = `translate3d(${left}px, ${top}px, 0)`;
+		inlineStyle = prefixr({transform: `translate3d(${left}px, ${top}px, 0)`});
 
 		this.setState({
 			ready: true
@@ -77,6 +78,8 @@ export class Modal extends React.Component{
 
 					this.props.cancelCallback && this.props.cancelCallback();
 
+					break
+
 				case 'confirm':
 					
 					if(this.props.confirmCallback){
@@ -85,6 +88,8 @@ export class Modal extends React.Component{
 					else{
 						this.close();
 					}
+
+					break
 			}
 		});
 	}

@@ -1,10 +1,11 @@
 {
 	"name": "react-ui-modal",
-	"version": "0.1.4",
+	"version": "0.1.6",
 	"description": "Modal react component by VIPSHOP H5 Team",
 	"main": "lib/modal.js",
 	"dependencies": {
 		"react": "^0.13.3",
+		"react-prefixr": "~0.1.0",
 		"classnames": "^2.1.0"
 	},
 	"devDependencies": {
@@ -12,7 +13,7 @@
 		"babel-runtime": "latest",
 		"style-loader": "latest",
 		"css-loader": "latest",
-		"stylus-loader": "latest",
+		"stylus-loader": "~1.2.0",
 		"nib": "latest"
 	},
 	"scripts": {
