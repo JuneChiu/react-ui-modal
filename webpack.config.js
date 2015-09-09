@@ -3,7 +3,7 @@ var path = require('path');
 
 module.exports = {
 	entry: {
-    	app: ["webpack/hot/dev-server", "./src/main"]
+    	app: "./src/main"
 	},
 	resolve: {
 		extensions: ['', '.js', '.jsx']

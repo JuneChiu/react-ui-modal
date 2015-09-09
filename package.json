@@ -10,14 +10,13 @@
 	},
 	"devDependencies": {
 		"babel-loader": "latest",
-		"babel-runtime": "latest",
 		"style-loader": "latest",
 		"css-loader": "latest",
 		"stylus-loader": "~1.2.0",
 		"nib": "latest"
 	},
 	"scripts": {
-		"demo": "webpack-dev-server --hot",
+		"demo": "webpack-dev-server",
 		"compile": "babel -d lib/ src/",
 		"prepublish": "npm run compile",
 		"test": "echo \"Error: no test specified\" && exit 1"

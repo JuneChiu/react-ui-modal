@@ -11,7 +11,6 @@ export class Modal extends React.Component{
 
 		super(props);
 
-		// 设置状态强制执行渲染
 		this.state = {
 			ready: false,
 			destroy: false
@@ -53,6 +52,19 @@ export class Modal extends React.Component{
 
 			}, this.props.autoClose)
 		}
+		
+		['touchstart', 'touchmove', 'touchsend'].forEach((item) => {
+			React.findDOMNode(this.refs.mask).addEventListener(item, (e) =>{
+				e.preventDefault();
+				e.stopPropagation();
+			});
+		});
+
+		['touchmove'].forEach((item) => {
+			containerEl.addEventListener(item, (e) =>{
+				e.stopPropagation();
+			});
+		});
 
 		containerEl.addEventListener("transitionend", (e) =>{
 
@@ -103,7 +115,7 @@ export class Modal extends React.Component{
 
 		return (
 			<div className={style.wrap} ref="wrap">
-				<div className={classNames(style.mask, {active: this.state.ready && !this.state.destroy})}></div>
+				<div className={classNames(style.mask, {active: this.state.ready && !this.state.destroy})} ref="mask"></div>
 				<div style={inlineStyle} className={classNames(style.container, this.props.className, {active: this.state.ready && !this.state.destroy})} ref="container">
 					{this.props.children}
 				</div>
