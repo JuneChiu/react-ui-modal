@@ -29,7 +29,8 @@ export class Modal extends React.Component{
 	}
 
 	componentDidMount(){
-		let containerEl = React.findDOMNode(this.refs.container);
+		let containerEl = React.findDOMNode(this.refs.container),
+			maskEl = React.findDOMNode(this.refs.mask);
 
 		let bounds = containerEl.getBoundingClientRect();
 
@@ -53,32 +54,30 @@ export class Modal extends React.Component{
 			}, this.props.autoClose)
 		}
 		
-		['touchstart', 'touchmove', 'touchsend'].forEach((item) => {
-			React.findDOMNode(this.refs.mask).addEventListener(item, (e) =>{
+		['touchstart', 'touchmove', 'touchsend'].forEach((event) => {
+			maskEl.addEventListener(event, (e) =>{
 				e.preventDefault();
 				e.stopPropagation();
 			});
 		});
 
-		['touchmove'].forEach((item) => {
-			containerEl.addEventListener(item, (e) =>{
-				e.stopPropagation();
+
+		['webkitTransitionEnd', 'transitionend', 'oTransitionEnd'].forEach((event) => {
+
+			containerEl.addEventListener(event, (e) =>{
+
+				let wrapEl = React.findDOMNode(this.refs.wrap);
+
+				// 移除组件
+				if(this.state.destroy && wrapEl){
+					
+					let scopeEl = wrapEl.parentNode;
+					React.unmountComponentAtNode(scopeEl);
+
+					// 移除真实DOM
+					scopeEl.parentNode.removeChild(scopeEl);
+				}
 			});
-		});
-
-		containerEl.addEventListener("transitionend", (e) =>{
-
-			let wrapEl = React.findDOMNode(this.refs.wrap);
-
-			// 移除组件
-			if(this.state.destroy && wrapEl){
-				
-				let scopeEl = wrapEl.parentNode;
-				React.unmountComponentAtNode(scopeEl);
-
-				// 移除真实DOM
-				scopeEl.parentNode.removeChild(scopeEl);
-			}
 		});
 
 		containerEl.addEventListener("click", (e) =>{
