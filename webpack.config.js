@@ -8,6 +8,9 @@ module.exports = {
 	resolve: {
 		extensions: ['', '.js', '.jsx']
 	},
+	devServer:{
+		port: 8080
+	},
 	output: {
 		path: "./build",
    		filename: "bundle.js"

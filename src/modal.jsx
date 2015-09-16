@@ -130,7 +130,11 @@ class Tips extends React.Component{
 	render(){
 		let props = this.props;
 
-		return <Modal className={classNames(style.tips, this.props.className)} autoClose={props.duration || 2000} {...props}>
+		let className = this.props.className;
+
+		delete this.props.className;
+
+		return <Modal className={classNames(style.tips, className)} autoClose={props.duration || 2000} {...props}>
 					{props.msg}
 				</Modal>
 	}
@@ -144,6 +148,12 @@ class Dialog extends React.Component{
 	render(){
 		let props = this.props;
 
+		let className = this.props.className;
+
+		delete this.props.className;
+
+		console.log(props)
+
 		let titleEl = false, msgEl = false;
 
 		if(props.title){
@@ -154,7 +164,7 @@ class Dialog extends React.Component{
 			msgEl = <section>{props.msg}</section>
 		}
 
-		return <Modal className={classNames(style.dialog, this.props.className)} {...props}>
+		return <Modal className={classNames(style.dialog, className)} {...props}>
 					{titleEl}
 					{msgEl}
 					<footer>

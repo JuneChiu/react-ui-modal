@@ -13,7 +13,8 @@ window.addEventListener('load', function(){
 	document.getElementById('dialog').addEventListener('click', () => {
 		modal('dialog', {
 			title: '提示',
-			msg: '这是个对话框'
+			msg: '这是个对话框',
+			className: 'cunstom'
 		});
 
 	});
