@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import prefixr from 'react-prefixr';
 import style from '../style/modal.styl';
 
-let inlineStyle = {}
-
-export class Modal extends React.Component{
+export class Modal extends Component{
 
 	constructor(props) {
 
@@ -14,7 +13,9 @@ export class Modal extends React.Component{
 		this.state = {
 			ready: false,
 			destroy: false
-		}
+		};
+
+		this.style = {};
 
 		this.close = this.close.bind(this);
 	}
@@ -29,17 +30,15 @@ export class Modal extends React.Component{
 	}
 
 	componentDidMount(){
-		let containerEl = React.findDOMNode(this.refs.container),
-			maskEl = React.findDOMNode(this.refs.mask);
+		const containerEl = ReactDOM.findDOMNode(this.refs.container),
+			maskEl = ReactDOM.findDOMNode(this.refs.mask);
 
-		let bounds = containerEl.getBoundingClientRect();
+		const bounds = containerEl.getBoundingClientRect();
 
 		// 避免进行3d变换时候产生字体模糊问题 
-		let left = parseInt((window.innerWidth - bounds.width) / 2)
+		const [left, top] = [parseInt((window.innerWidth - bounds.width) / 2), parseInt((window.innerHeight - bounds.height) / 2)];
 
-		let top =  parseInt((window.innerHeight - bounds.height) / 2)
-
-		inlineStyle = prefixr({transform: `translate3d(${left}px, ${top}px, 0)`});
+		this.style = prefixr({transform: `translate3d(${left}px, ${top}px, 0)`});
 
 		this.setState({
 			ready: true
@@ -50,7 +49,6 @@ export class Modal extends React.Component{
 		if(this.props.autoClose){
 			setTimeout(() => {
 				this.close();
-
 			}, this.props.autoClose)
 		}
 		
@@ -66,13 +64,14 @@ export class Modal extends React.Component{
 
 			containerEl.addEventListener(event, (e) =>{
 
-				let wrapEl = React.findDOMNode(this.refs.wrap);
+				const wrapEl = ReactDOM.findDOMNode(this.refs.wrap);
 
 				// 移除组件
 				if(this.state.destroy && wrapEl){
 					
-					let scopeEl = wrapEl.parentNode;
-					React.unmountComponentAtNode(scopeEl);
+					const scopeEl = wrapEl.parentNode;
+
+					ReactDOM.unmountComponentAtNode(scopeEl);
 
 					// 移除真实DOM
 					scopeEl.parentNode.removeChild(scopeEl);
@@ -81,20 +80,20 @@ export class Modal extends React.Component{
 		});
 
 		containerEl.addEventListener("click", (e) =>{
-			let action = e.target.dataset.action
-			
+			const action = e.target.dataset.action, props = this.props;
+
 			switch (action) {
 				case 'close':
 					this.close();
 
-					this.props.cancelCallback && this.props.cancelCallback();
+					props.cancelCallback && props.cancelCallback();
 
 					break
 
 				case 'confirm':
 					
-					if(this.props.confirmCallback){
-						this.props.confirmCallback(this);
+					if(props.confirmCallback){
+						props.confirmCallback(this);
 					}
 					else{
 						this.close();
@@ -106,16 +105,20 @@ export class Modal extends React.Component{
 	}
 	
 	componentWillUnmount(){
-
 		this.close();
 	}
 
 	render() {
 
+		const state = this.state;
+
 		return (
 			<div className={style.wrap} ref="wrap">
-				<div className={classNames(style.mask, {active: this.state.ready && !this.state.destroy})} ref="mask"></div>
-				<div style={inlineStyle} className={classNames(style.container, this.props.className, {active: this.state.ready && !this.state.destroy})} ref="container">
+
+				<div className={classNames(style.mask, {active: state.ready && !state.destroy})} ref="mask"></div>
+
+				<div style={this.style} className={classNames(style.container, this.props.className, {active: state.ready && !state.destroy})} ref="container">
+
 					{this.props.children}
 				</div>
 			</div>
@@ -123,76 +126,71 @@ export class Modal extends React.Component{
 	}
 }
 
-class Tips extends React.Component{
+class Tips extends Component{
 	constructor(props) {
 		super(props);
 	}
 	render(){
-		let props = this.props;
+		const props = this.props;
 
-		let className = this.props.className;
+		let arg = Object.assign({}, props);
 
-		delete this.props.className;
+		delete arg.className;
 
-		return <Modal className={classNames(style.tips, className)} autoClose={props.duration || 2000} {...props}>
+		return <Modal className={classNames(style.tips, props.className)} autoClose={props.duration || 2000} {...arg}>
 					{props.msg}
 				</Modal>
 	}
 }
 
-class Dialog extends React.Component{
+class Dialog extends Component{
+
 	constructor(props) {
 		super(props);
 	}
 
 	render(){
-		let props = this.props;
+		const props = this.props;
 
-		let className = this.props.className;
+		let arg = Object.assign({}, props);
 
-		delete this.props.className;
+		delete arg.className;
 
-		console.log(props)
+		return <Modal className={classNames(style.dialog, props.className)} {...arg}>
 
-		let titleEl = false, msgEl = false;
+					{props.title && <header>{props.title}</header>}
 
-		if(props.title){
-			titleEl = <header>{props.title}</header>
-		}
+					{props.msg && <section>{props.msg}</section>}
 
-		if(props.msg){
-			msgEl = <section>{props.msg}</section>
-		}
-
-		return <Modal className={classNames(style.dialog, className)} {...props}>
-					{titleEl}
-					{msgEl}
 					<footer>
-						<button data-action="close">{props.cancelTxt || '取消'}</button>
-						<button data-action="confirm">{props.confirmTxt || '确定'}</button>
+						{props.cancelTxt && <button data-action="close">{props.cancelTxt}</button>}
+						
+						{props.confirmTxt && <button data-action="confirm">{props.confirmTxt}</button>}
 					</footer>
 				</Modal>
 	}
 }
 
-
+Dialog.defaultProps = {
+	cancelTxt: '取消',
+	confirmTxt: '确定'
+}
 
 export default function(type, option){
 
 	type = type.toLowerCase();
 
-	let el = document.createElement('div')
+	const el = document.createElement('div')
 
 	document.body.appendChild(el);
 
 	switch (type) {
 		case 'tips':
-			React.render(React.createElement(Tips, option), el);
+			ReactDOM.render(React.createElement(Tips, option), el);
 			break
 
 		case 'dialog':
-			React.render(React.createElement(Dialog, option), el);
+			ReactDOM.render(React.createElement(Dialog, option), el);
 			break
 	}
-	
 }

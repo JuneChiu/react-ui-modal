@@ -14,8 +14,20 @@ window.addEventListener('load', function(){
 		modal('dialog', {
 			title: '提示',
 			msg: '这是个对话框',
+			className: 'cunstom',
+			confirmCallback: () => {
+				console.log(123)
+			}
+		});
+	});
+
+	document.getElementById('dialog-wo-cancel').addEventListener('click', () => {
+		modal('dialog', {
+			title: '提示',
+			msg: '这是个对话框',
+			cancelTxt: false,
 			className: 'cunstom'
 		});
-
 	});
+
 })
