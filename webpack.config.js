@@ -9,7 +9,7 @@ module.exports = {
 		extensions: ['', '.js', '.jsx']
 	},
 	devServer:{
-		port: 8080
+		port: 3001
 	},
 	output: {
 		path: "./build",
@@ -19,7 +19,10 @@ module.exports = {
 		loaders: [{
 			test: /\.(js|jsx)$/,
 			exclude: /(node_modules)/,
-			loader: 'babel'
+			loader: 'babel',
+			query: {
+				optional: ['runtime']
+			}
 		}, {
 			test: /\.styl$/,
 			loader: 'style!css!stylus?paths=' + path.resolve(__dirname, './node_modules/nib/lib/')

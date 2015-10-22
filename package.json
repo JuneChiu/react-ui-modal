@@ -1,6 +1,6 @@
 {
 	"name": "react-ui-modal",
-	"version": "0.2.1",
+	"version": "0.2.3",
 	"description": "Modal react component by VIPSHOP H5 Team",
 	"main": "lib/modal.js",
 	"dependencies": {
@@ -14,11 +14,12 @@
 		"style-loader": "latest",
 		"css-loader": "latest",
 		"stylus-loader": "~1.2.0",
-		"nib": "latest"
+		"nib": "latest",
+		"babel-runtime": "latest"
 	},
 	"scripts": {
 		"demo": "webpack-dev-server",
-		"compile": "babel -d lib/ src/",
+		"compile": "babel -d lib/ src/ --optional runtime",
 		"prepublish": "npm run compile",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
